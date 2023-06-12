@@ -1,0 +1,34 @@
+@page "/add-photo"
+
+<MudText Typo="Typo.h4">New Picture</MudText>
+
+<MudForm Model="@NewPhoto">
+    <MudCard>
+        <MudCardContent>
+            <MudTextField Label="Title" HelperText="A nice title for the picture" @bind-Value="NewPhoto.Title"
+                For="@(() => NewPhoto.Title)" />
+
+            <MudTextField Label="Description" HelperText="What's the story behind this picture?"
+            @bind-Value="NewPhoto.Description" For="@(() => NewPhoto.Description)" />
+            <MudFileUpload T="IBrowserFile" FilesChanged="HandleInputFileChanged">
+                <ButtonTemplate>
+                    <MudButton HtmlTag="label" Variant="Variant.Filled" Color="Color.Primary"
+                        StartIcon="@Icons.Material.Filled.CloudUpload" for="@context">
+                        Upload File
+                    </MudButton>
+                </ButtonTemplate>
+            </MudFileUpload>
+
+            @if(NewPhoto.Data.Length != 0)
+            {
+                <MudCardMedia Image="@(NewPhoto.Data.Length == 0 ? string.Empty : $"data:{NewPhoto.ImageMimetype};base64,{Convert.ToBase64String(NewPhoto.Data)}")"
+                              Height="200"
+                              Class="rounded-lg" />
+            }
+        </MudCardContent>
+        <MudCardActions>
+            <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto"
+                OnClick="HandleSubmit">Submit</MudButton>
+        </MudCardActions>
+    </MudCard>
+</MudForm>
