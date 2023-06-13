@@ -1,3 +1,4 @@
+using System.Net.Http.Json;
 using MyBlazorCourse.Shared.Interface;
 using MyBlazorCourse.Shared.Model;
 
@@ -5,31 +6,47 @@ namespace MyBlazorCourse.Client.Service;
 
 public class PhotoService : IPhotoService
 {
-    private ICollection<Photo> _collection = new List<Photo>()
-    {
-        new() { Id = 1, Title = "First", Description = "My First Photo"},
-        new() { Id = 2, Title = "Second", Description = "My Second Photo"},
-        new() { Id = 3, Title = "Third", Description = "My Third Photo"}
-    };
+    private readonly HttpClient _client;
 
-    public async Task<Photo> GetByIdAsync(int id)
+    public PhotoService(HttpClient client)
     {
-        await Task.CompletedTask;
-
-        return _collection.First(p => p.Id == id);
+        _client = client;
     }
 
-    public async Task<ICollection<Photo>> GetAllAsync()
+    public async Task<Photo?> GetByIdAsync(int id)
     {
-        await Task.CompletedTask;
-
-        return _collection;
+        return await _client.GetFromJsonAsync<Photo?>($"/api/photo/{id}");
     }
 
-    public async Task AddAsync(Photo newPhoto)
+    public async Task<ICollection<Photo>?> GetAllAsync()
     {
-        _collection.Add(newPhoto);
+        return await _client.GetFromJsonAsync<ICollection<Photo>?>("/api/photo");
+    }
 
-        await Task.CompletedTask;
+    public async Task<Photo?> AddAsync(Photo newPhoto)
+    {
+        var response = await _client.PostAsJsonAsync<Photo>("/api/photo", newPhoto);
+
+        response.EnsureSuccessStatusCode();
+
+        return await response.Content.ReadFromJsonAsync<Photo?>();
+    }
+
+    public async Task<Photo?> UpdateAsync(Photo changedPhoto)
+    {
+        var response = await _client.PutAsJsonAsync<Photo>($"/api/photo/{changedPhoto.Id}", changedPhoto);
+
+        response.EnsureSuccessStatusCode();
+
+        return await response.Content.ReadFromJsonAsync<Photo?>();
+    }
+
+    public async Task<Photo?> DeleteAsync(int id)
+    {
+        var response = await _client.DeleteAsync($"/api/photo/{id}");
+
+        response.EnsureSuccessStatusCode();
+
+        return await response.Content.ReadFromJsonAsync<Photo?>();
     }
 }

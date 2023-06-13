@@ -1,0 +1,6 @@
+@page "/edit-photo/{id:int}"
+@using BlazorComponents.Components.Edit
+
+<MudText Typo="Typo.h4">Edit Picture</MudText>
+
+<EditPhotoComponent @bind-Photo:get="Photo" @bind-Photo:set="HandleEdit" />

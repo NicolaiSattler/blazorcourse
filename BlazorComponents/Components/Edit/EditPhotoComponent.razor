@@ -1,15 +1,11 @@
-@page "/add-photo"
-
-<MudText Typo="Typo.h4">New Picture</MudText>
-
-<MudForm Model="@NewPhoto">
+<MudForm Model="@Photo">
     <MudCard>
         <MudCardContent>
-            <MudTextField Label="Title" HelperText="A nice title for the picture" @bind-Value="NewPhoto.Title"
-                For="@(() => NewPhoto.Title)" />
+            <MudTextField Label="Title" HelperText="A nice title for the picture" @bind-Value="Photo.Title"
+                For="@(() => Photo.Title)" />
 
             <MudTextField Label="Description" HelperText="What's the story behind this picture?"
-            @bind-Value="NewPhoto.Description" For="@(() => NewPhoto.Description)" />
+            @bind-Value="Photo.Description" For="@(() => Photo.Description)" />
             <MudFileUpload T="IBrowserFile" FilesChanged="HandleInputFileChanged">
                 <ButtonTemplate>
                     <MudButton HtmlTag="label" Variant="Variant.Filled" Color="Color.Primary"
@@ -19,9 +15,11 @@
                 </ButtonTemplate>
             </MudFileUpload>
 
-            @if(NewPhoto.Data.Length != 0)
+            @if(Photo.Data.Length != 0)
             {
-                <MudCardMedia Image="@(NewPhoto.Data.Length == 0 ? string.Empty : $"data:{NewPhoto.ImageMimetype};base64,{Convert.ToBase64String(NewPhoto.Data)}")"
+                <MudCardMedia Image="@(Photo.Data.Length == 0
+                                       ? string.Empty
+                                       : $"data:{Photo.ImageMimetype};base64,{Convert.ToBase64String(Photo.Data)}")"
                               Height="200"
                               Class="rounded-lg" />
             }

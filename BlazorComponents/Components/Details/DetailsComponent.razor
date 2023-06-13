@@ -1,0 +1,18 @@
+@if (Photo is not null)
+{
+    <MudCardContent>
+            <MudText><b>Id:</b> @Photo.Id</MudText>
+            <MudText><b>Title: </b> @Photo.Title</MudText>
+            <MudText><b>Description: </b> @Photo.Description</MudText>
+
+            @if(Photo.Data.Length != 0)
+            {
+                <MudCardMedia Image="@(Photo.Data.Length == 0
+                                       ? string.Empty
+                                       : $"data:{Photo.ImageMimetype};base64,{Convert.ToBase64String(Photo.Data)}")"
+                              Height="200"
+                              Class="rounded-lg" />
+            }
+
+    </MudCardContent>
+}

@@ -1,0 +1,18 @@
+@page "/all-photos"
+@using BlazorComponents.Components.Details
+
+<MudText Typo="Typo.h4">Photo Album</MudText>
+
+<MudButton Class="mb-4 justify-end"  Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Add" Color="Color.Primary" Href="/add-photo">New</MudButton>
+
+@foreach (var item in PhotoCollection)
+{
+    <MudCard Class="mb-4">
+        <DetailsComponent Photo="item" />
+        <MudCardActions>
+            <MudIconButton Variant="Variant.Text" Color="Color.Primary" aria-label="view" Icon="@Icons.Material.Filled.Preview" Href="@($"/photo-details/{item?.Id}")"></MudIconButton>
+            <MudIconButton Variant="Variant.Text" Color="Color.Primary" aria-label="edit" Icon="@Icons.Material.Filled.Edit" Href="@($"/edit-photo/{item?.Id}")"></MudIconButton>
+            <MudIconButton Variant="Variant.Text" Color="Color.Primary" aria-label="delete" Icon="@Icons.Material.Filled.Delete" Href="@($"/delete-photo/{item?.Id}")"></MudIconButton>
+        </MudCardActions>
+    </MudCard>
+}

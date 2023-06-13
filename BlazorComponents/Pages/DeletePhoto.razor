@@ -1,0 +1,15 @@
+@page "/delete-photo/{id:int}"
+@using BlazorComponents.Components.Details
+
+<MudText Typo="Typo.h4">Delete Photo</MudText>
+
+@if (Model is not null)
+{
+    <MudCard>
+        <DetailsComponent Photo="Model" />
+        <MudCardActions>
+            <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto"
+                OnClick="HandleDeleteClick">Delete</MudButton>
+        </MudCardActions>
+    </MudCard>
+}

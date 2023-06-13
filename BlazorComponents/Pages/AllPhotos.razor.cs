@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Components;
 using MyBlazorCourse.Shared.Interface;
 using MyBlazorCourse.Shared.Model;
 
-namespace MyBlazorCourse.Client.Pages;
+namespace BlazorComponents.Pages;
 
 public partial class AllPhotos: ComponentBase
 {

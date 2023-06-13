@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Components;
 using MyBlazorCourse.Shared.Interface;
 using MyBlazorCourse.Shared.Model;
 
-namespace MyBlazorCourse.Client.Pages;
+namespace BlazorComponents.Pages;
 
 public partial class PhotoDetails: ComponentBase
 {
@@ -17,6 +17,11 @@ public partial class PhotoDetails: ComponentBase
     protected async override Task OnInitializedAsync()
     {
         if (PhotoService is not null)
+        {
             Model = await PhotoService.GetByIdAsync(Id);
+            Console.WriteLine(Model.Id);
+            Console.WriteLine(Model == null);
+
+        }
     }
 }

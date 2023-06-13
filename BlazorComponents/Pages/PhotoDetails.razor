@@ -1,0 +1,11 @@
+@page "/photo-details/{id:int}"
+@using BlazorComponents.Components.Details
+
+<MudText Typo="Typo.h4">Photo Details</MudText>
+
+@if (Model is not null)
+{
+    <MudCard>
+        <DetailsComponent Photo="Model" />
+    </MudCard>
+}
