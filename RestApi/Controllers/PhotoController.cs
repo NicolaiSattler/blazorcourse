@@ -1,7 +1,7 @@
 
+using Infrastructure.Repository;
 using Microsoft.AspNetCore.Mvc;
 using MyBlazorCourse.Shared.Model;
-using RestApi.Repository;
 
 namespace RestApi.Controllers;
 

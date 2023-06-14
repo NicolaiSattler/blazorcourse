@@ -1,18 +1,11 @@
-using Microsoft.EntityFrameworkCore;
-using RestApi.DataAccess;
-using RestApi.Repository;
+using Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddScoped<IPhotoRepository, PhotoRepository>();
-builder.Services.AddDbContext<PhotoDbContext>(options =>
-{
-    var connectionString = builder.Configuration.GetConnectionString("PhotoDb");
-    options.UseSqlite(connectionString);
-});
+builder.Services.AddInfrastructure(builder.Configuration);
 
 var app = builder.Build();
 

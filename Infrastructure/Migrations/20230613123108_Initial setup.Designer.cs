@@ -3,11 +3,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using RestApi.DataAccess;
+using Infrastructure.DataAccess;
 
 #nullable disable
 
-namespace RestApi.Migrations
+namespace Infrastructure.Migrations
 {
     [DbContext(typeof(PhotoDbContext))]
     [Migration("20230613123108_Initial setup")]

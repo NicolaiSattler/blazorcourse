@@ -1,9 +1,8 @@
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MyBlazorCourse.Shared.Model;
-using RestApi.DataAccess;
+using Infrastructure.DataAccess;
 
-namespace RestApi.Repository;
+namespace Infrastructure.Repository;
 
 public interface IPhotoRepository
 {

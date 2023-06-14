@@ -1,12 +1,20 @@
 using Google.Protobuf.WellKnownTypes;
 using Grpc.Core;
+using Infrastructure.Repository;
 using MyBlazorCourse.Shared.Model;
 
 namespace GrpcService.Services;
 
 public class CommenterService: Commenter.CommenterBase
 {
-    public override Task<CreateResponse> Create(CreateRequest request, ServerCallContext context)
+    private readonly ICommentRepository _commentRepository;
+
+    public CommenterService(ICommentRepository commentRepository)
+    {
+        _commentRepository = commentRepository;
+    }
+
+    public override async Task<CreateResponse> Create(CreateRequest request, ServerCallContext context)
     {
         var newComment = new Comment
         {
@@ -15,18 +23,56 @@ public class CommenterService: Commenter.CommenterBase
             Content = request.Content,
         };
 
-        //TOOD: EF Core save...
+        newComment = await _commentRepository.AddAsync(newComment);
 
-        var response = new CreateResponse()
+        var response = newComment is not null ? new CreateResponse()
         {
             Id = newComment.Id,
             Photoid = newComment.PhotoId,
             Title = newComment.Title,
             Content = newComment.Content,
             Submittedon = Timestamp.FromDateTime(newComment.SubmittedOn.ToUniversalTime())
+        }
+        : new CreateResponse();
+
+        return response;
+    }
+
+    public override async Task<UpdateResponse> Update(UpdateRequest request, ServerCallContext context)
+    {
+        var comment = new Comment
+        {
+            Id = request.Id,
+            Title = request.Title,
+            Content = request.Content,
         };
 
-        return Task.FromResult(response);
+        var changedComment = await _commentRepository.UpdateAsync(comment);
+
+        return changedComment is not null ? new UpdateResponse
+        {
+            Id = changedComment.Id,
+            Title = changedComment.Title,
+            Content = changedComment.Content,
+            Photoid = changedComment.PhotoId,
+            Submittedon = Timestamp.FromDateTime(changedComment.SubmittedOn.ToUniversalTime())
+        }
+        : new UpdateResponse();
+    }
+
+    public async override Task<DeleteResponse> Delete(DeleteRequest request, ServerCallContext context)
+    {
+        var deletedComment = await _commentRepository.RemoveAsync(request.Commentid);
+
+        return deletedComment is not null ? new DeleteResponse
+        {
+            Id = deletedComment.Id,
+            Title = deletedComment.Title,
+            Content = deletedComment.Content,
+            Photoid = deletedComment.PhotoId,
+            Submittedon = Timestamp.FromDateTime(deletedComment.SubmittedOn)
+        }
+        : new DeleteResponse();
     }
 
     public override Task<GetByPhotoIdResponse> GetByPhotoId(GetByPhotoIdRequest request, ServerCallContext context)

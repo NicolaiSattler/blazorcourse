@@ -1,0 +1,5 @@
+{
+  "ConnectionStrings": {
+    "ChessDb": "Data Source=../Photos.db;"
+  }
+}

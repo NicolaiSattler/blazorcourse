@@ -1,11 +1,12 @@
 using Microsoft.EntityFrameworkCore;
 using MyBlazorCourse.Shared.Model;
 
-namespace RestApi.DataAccess;
+namespace Infrastructure.DataAccess;
 
 public class PhotoDbContext: DbContext
 {
     public DbSet<Photo> Photos => Set<Photo>();
+    public DbSet<Comment> Comments => Set<Comment>();
 
     public PhotoDbContext() { }
     public PhotoDbContext(DbContextOptions<PhotoDbContext> options) : base(options) { }

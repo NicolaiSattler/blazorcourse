@@ -2,7 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using MyBlazorCourse.Shared.Model;
 
-namespace RestApi.DataAccess.EntityTypeConfiguration;
+namespace Infrastructure.DataAccess.EntityTypeConfiguration;
 
 public class PhotoConfiguration : IEntityTypeConfiguration<Photo>
 {
@@ -11,6 +11,5 @@ public class PhotoConfiguration : IEntityTypeConfiguration<Photo>
         builder.HasKey(p => p.Id);
         builder.Property(p => p.Id)
                .ValueGeneratedOnAdd();
-
     }
 }
