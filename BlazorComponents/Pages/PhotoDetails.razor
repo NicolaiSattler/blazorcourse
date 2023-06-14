@@ -1,11 +1,25 @@
 @page "/photo-details/{id:int}"
+@using BlazorComponents.Components.Comments
 @using BlazorComponents.Components.Details
-
-<MudText Typo="Typo.h4">Photo Details</MudText>
 
 @if (Model is not null)
 {
     <MudCard>
+        <MudCardHeader>
+            <CardHeaderContent>
+                <MudText Typo="Typo.h4">Photo Details</MudText>
+            </CardHeaderContent>
+        </MudCardHeader>
         <DetailsComponent Photo="Model" />
+    </MudCard>
+
+
+    <MudCard Class="mt-4">
+        <MudCardHeader>
+            <CardHeaderContent>
+                <MudText Typo="Typo.h4">Comments</MudText>
+            </CardHeaderContent>
+        </MudCardHeader>
+        <CommentsComponent PhotoId="@Model.Id" />
     </MudCard>
 }

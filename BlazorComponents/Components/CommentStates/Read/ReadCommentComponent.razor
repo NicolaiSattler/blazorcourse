@@ -1,0 +1,18 @@
+<MudCardContent>
+    @if (Comment is not null)
+    {
+        <MudText><i>@Comment.SubmittedOn.ToString()</i></MudText>
+        <MudText><b>Title: </b> @Comment?.Title</MudText>
+        <MudText><b>Description: </b> @Comment?.Content</MudText>
+    }
+    else
+    {
+        <MudText>Something went wrong...</MudText>
+    }
+</MudCardContent>
+<MudCardActions>
+    <MudIconButton Variant="Variant.Text" Color="Color.Primary" aria-label="return"
+                   Icon="@Icons.Material.Filled.Edit" OnClick="HandleEditClickAsync"></MudIconButton>
+    <MudIconButton Variant="Variant.Text" Color="Color.Primary" aria-label="confirm delete"
+                   Icon="@Icons.Material.Filled.Delete" OnClick="HandleDeleteClickAsync"></MudIconButton>
+</MudCardActions>

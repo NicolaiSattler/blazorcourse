@@ -47,6 +47,22 @@
                 "reveal": "silent"
             },
             "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "watch gRpc api",
+            "command": "dotnet",
+            "type": "shell",
+            "args": [
+                "watch",
+                "run",
+                "-lp='http'",
+                "--project",
+                "${workspaceFolder}/GrpcService/GrpcService.csproj"
+            ],
+            "presentation": {
+                "reveal": "silent"
+            },
+            "problemMatcher": "$msCompile"
         }
     ]
 }

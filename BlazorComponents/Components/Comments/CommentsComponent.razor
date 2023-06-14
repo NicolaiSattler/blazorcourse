@@ -1,0 +1,21 @@
+@using BlazorComponents.Components.CommentStates
+
+@if (!CommentCollection.Any())
+{
+    <MudCardContent>
+        <MudText>No comments have been made yet.</MudText>
+        <MudDivider Class="mt-4" DividerType="DividerType.Middle" />
+        <CommentComponent State="CommentState.New" OnNewComment="HandleOnNewAsync" />
+    </MudCardContent>
+}
+else
+{
+    @foreach (var item in CommentCollection)
+    {
+        <CommentComponent Comment=item  OnEditComment="HandleOnNewAsync" OnDeleteComment="HandleOnDeleteAsync" />
+
+        <MudDivider DividerType="DividerType.Middle" />
+    }
+
+    <CommentComponent State="CommentState.New" OnNewComment="HandleOnNewAsync" />
+}

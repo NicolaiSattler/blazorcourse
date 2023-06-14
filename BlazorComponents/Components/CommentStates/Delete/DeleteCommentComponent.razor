@@ -1,0 +1,11 @@
+<MudCardContent>
+    <MudText><b>Id:</b> @Comment?.Id</MudText>
+    <MudText><b>Title: </b> @Comment?.Title</MudText>
+    <MudText><b>Description: </b> @Comment?.Content</MudText>
+</MudCardContent>
+<MudCardActions>
+    <MudIconButton Variant="Variant.Text" Color="Color.Primary" aria-label="return"
+                   Icon="@Icons.Material.Filled.ArrowBackIos" OnClick="HandleCancelClickAsync"></MudIconButton>
+    <MudIconButton Variant="Variant.Text" Color="Color.Error" aria-label="confirm delete"
+                   Icon="@Icons.Material.Filled.DeleteForever" OnClick="HandleConfirmDeleteClickAsync"></MudIconButton>
+</MudCardActions>

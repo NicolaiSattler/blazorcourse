@@ -1,0 +1,22 @@
+@using BlazorComponents.Components.CommentStates.Delete
+@using BlazorComponents.Components.CommentStates.Edit
+@using BlazorComponents.Components.CommentStates.Read
+
+@switch (State)
+{
+    case CommentState.Read:
+        <ReadCommentComponent Comment="Comment" RaiseDelete="HandleDelete" RaiseEdit="HandleEdit" />
+    break;
+
+    case CommentState.Edit:
+        <EditCommentComponent Comment="Comment" RaiseCancel="HandleCancel" RaiseSave="HandleSave" />
+    break;
+
+    case CommentState.Delete:
+        <DeleteCommentComponent Comment="Comment" RaiseCancel="HandleCancel" RaiseConfirmDelete="HandleConfirmDelete" />
+    break;
+
+    case CommentState.New:
+        <EditCommentComponent Comment="@(new())" RaiseCancel="HandleCancel" RaiseSave="HandleSaveNew" />
+    break;
+}

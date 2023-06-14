@@ -1,0 +1,23 @@
+<MudCardContent>
+    @if (EditComment is not null)
+    {
+        <MudTextField Label="Title" HelperText="Comment title" @bind-Value="EditComment.Title"
+                      For="@(() => EditComment.Title)" />
+
+        <MudTextField Label="Content" HelperText="What do you want to say about this picture?" @bind-Value="EditComment.Content"
+                      For="@(() => EditComment.Content)" />
+    }
+    else
+    {
+        <MudText>Something went wrong...</MudText>
+    }
+</MudCardContent>
+<MudCardActions>
+    @if (ShowBackButton)
+    {
+        <MudIconButton Variant="Variant.Text" Color="Color.Primary" aria-label="return"
+                       Icon="@Icons.Material.Filled.ArrowBackIos" OnClick="HandleCancelClickAsync"></MudIconButton>
+    }
+    <MudIconButton Variant="Variant.Text" Color="Color.Primary" aria-label="save"
+                   Icon="@Icons.Material.Filled.Save" OnClick="HandleSaveClickAsync"></MudIconButton>
+</MudCardActions>
