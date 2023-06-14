@@ -11,6 +11,7 @@ public static class ServiceCollectionExtensions
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration config)
     {
         services.AddScoped<IPhotoRepository, PhotoRepository>();
+        services.AddScoped<ICommentRepository, CommentRepository>();
         services.AddDbContext<PhotoDbContext>(options =>
         {
             var connectionString = config.GetConnectionString("PhotoDb");

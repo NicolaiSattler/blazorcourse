@@ -30,7 +30,7 @@ public class CommentRepository : ICommentRepository
         return result.Entity;
     }
 
-    public async Task<IList<Comment>?> GetByPhotoIdAsync(int id) => await _context.Comments.Where(p => p.Id == id)
+    public async Task<IList<Comment>?> GetByPhotoIdAsync(int photoId) => await _context.Comments.Where(p => p.PhotoId == photoId)
                                                                                            .ToListAsync();
 
     public async Task<Comment?> UpdateAsync(Comment changedComment)

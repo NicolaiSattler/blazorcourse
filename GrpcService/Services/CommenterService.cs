@@ -21,6 +21,7 @@ public class CommenterService: Commenter.CommenterBase
             PhotoId = request.Photoid,
             Title = request.Title,
             Content = request.Content,
+            SubmittedOn = DateTime.UtcNow
         };
 
         newComment = await _commentRepository.AddAsync(newComment);
@@ -43,8 +44,10 @@ public class CommenterService: Commenter.CommenterBase
         var comment = new Comment
         {
             Id = request.Id,
+            PhotoId = request.Photoid,
             Title = request.Title,
             Content = request.Content,
+            SubmittedOn = DateTime.UtcNow
         };
 
         var changedComment = await _commentRepository.UpdateAsync(comment);
@@ -70,16 +73,16 @@ public class CommenterService: Commenter.CommenterBase
             Title = deletedComment.Title,
             Content = deletedComment.Content,
             Photoid = deletedComment.PhotoId,
-            Submittedon = Timestamp.FromDateTime(deletedComment.SubmittedOn)
+            Submittedon = Timestamp.FromDateTime(deletedComment.SubmittedOn.ToUniversalTime())
         }
         : new DeleteResponse();
     }
 
-    public override Task<GetByPhotoIdResponse> GetByPhotoId(GetByPhotoIdRequest request, ServerCallContext context)
+    public async override Task<GetByPhotoIdResponse> GetByPhotoId(GetByPhotoIdRequest request, ServerCallContext context)
     {
-        var result = new List<Comment>();
-        //TODO: EF Core get by id;
-        var items = result.Select(r => new GetByPhotoIdItem()
+        var result = await _commentRepository.GetByPhotoIdAsync(request.Photoid);
+
+        var items = result?.Select(r => new GetByPhotoIdItem()
         {
             Id = r.Id,
             Photoid = r.PhotoId,
@@ -91,6 +94,6 @@ public class CommenterService: Commenter.CommenterBase
         var response = new GetByPhotoIdResponse();
         response.Comments.AddRange(items);
 
-        return Task.FromResult(response);
+        return response;
     }
 }

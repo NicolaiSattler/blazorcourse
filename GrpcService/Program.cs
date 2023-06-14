@@ -1,8 +1,10 @@
 using GrpcService.Services;
+using Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddGrpc();
+builder.Services.AddInfrastructure(builder.Configuration);
 
 var app = builder.Build();
 
