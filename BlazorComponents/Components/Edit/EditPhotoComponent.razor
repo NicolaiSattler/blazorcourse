@@ -15,7 +15,7 @@
                 </ButtonTemplate>
             </MudFileUpload>
 
-            @if(Photo.Data.Length != 0)
+            @if(Photo.Data?.Length != 0)
             {
                 <MudCardMedia Image="@(Photo.Data.Length == 0
                                        ? string.Empty

@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.Net.Http.Json;
 using MyBlazorCourse.Shared.Interface;
 using MyBlazorCourse.Shared.Model;
@@ -20,16 +21,35 @@ public class PhotoService : IPhotoService
 
     public async Task<ICollection<Photo>?> GetAllAsync()
     {
-        return await _client.GetFromJsonAsync<ICollection<Photo>?>("/api/photo");
+        try
+        {
+            return await _client.GetFromJsonAsync<ICollection<Photo>?>("/api/photo");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex);
+        }
+
+        return new List<Photo>();
     }
 
     public async Task<Photo?> AddAsync(Photo newPhoto)
     {
-        var response = await _client.PostAsJsonAsync<Photo>("/api/photo", newPhoto);
+        try
+        {
+            var response = await _client.PostAsJsonAsync<Photo>("/api/photo", newPhoto);
 
-        response.EnsureSuccessStatusCode();
+            Console.WriteLine(response.Content);
 
-        return await response.Content.ReadFromJsonAsync<Photo?>();
+            response.EnsureSuccessStatusCode();
+            return await response.Content.ReadFromJsonAsync<Photo?>();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex);
+        }
+
+        return default;
     }
 
     public async Task<Photo?> UpdateAsync(Photo changedPhoto)

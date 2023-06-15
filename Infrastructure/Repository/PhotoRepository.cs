@@ -21,9 +21,10 @@ public class PhotoRepository : IPhotoRepository
     {
         _context = context;
     }
+
     public async Task<Photo> AddAsync(Photo newPhoto)
     {
-        var result = _context.Add(newPhoto);
+        var result = _context.Photos.Add(newPhoto);
 
         await _context.SaveChangesAsync();
 
@@ -35,7 +36,7 @@ public class PhotoRepository : IPhotoRepository
 
     public async Task<Photo?> UpdateAsync(Photo changedPhoto)
     {
-        var result = _context.Update(changedPhoto);
+        var result = _context.Photos.Update(changedPhoto);
 
         await _context.SaveChangesAsync();
 

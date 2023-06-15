@@ -13,22 +13,24 @@ public partial class AddPhoto: ComponentBase
     private NavigationManager? NavigationManager { get; set; }
 
     [Inject]
-    private ILogger<AddPhoto>? Logger { get; set; }
-
-    [Inject]
     private IPhotoService? PhotoService { get; set;}
 
     private async Task HandlePhotoChanged(Photo newPhoto)
     {
-        if (PhotoService == null)
+        try
         {
-            var result = await PhotoService?.AddAsync(newPhoto);
 
-            if (result == null)
-                Logger?.LogError("Failed to add photo");
-
+        if (PhotoService != null)
+        {
+            await PhotoService.AddAsync(newPhoto);
         }
 
         NavigationManager?.NavigateTo("/all-photos");
+
+        }
+        catch(Exception ex)
+        {
+            Console.WriteLine(ex);
+        }
     }
 }

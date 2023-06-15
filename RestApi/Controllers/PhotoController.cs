@@ -23,7 +23,9 @@ public class PhotoController : ControllerBase
     {
         if (newPhoto == null) return BadRequest();
 
-        return await _repository.AddAsync(newPhoto);
+        var result = await _repository.AddAsync(newPhoto);
+
+        return Ok(result);
     }
 
     [HttpGet()]
@@ -61,6 +63,6 @@ public class PhotoController : ControllerBase
 
         if (result == null) return NotFound(id);
 
-        return result;
+        return Ok(result);
     }
 }

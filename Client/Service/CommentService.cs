@@ -1,11 +1,14 @@
+using GrpcService;
 using MyBlazorCourse.Shared.Interface;
 using MyBlazorCourse.Shared.Model;
 
 namespace MyBlazorCourse.Client.Service;
 
+//TODO: resilienc
 public class CommentService : ICommentService
 {
     private readonly ILogger<CommentService> _logger;
+    private readonly Commenter.CommenterClient _client;
 
     private ICollection<Comment> Comments = new List<Comment>()
     {
@@ -15,52 +18,80 @@ public class CommentService : ICommentService
         new() { Id = 5, PhotoId = 1, Title = "Hello World", Content = "Foobar", SubmittedOn = DateTime.UtcNow }
     };
 
-    public CommentService(ILogger<CommentService> logger)
+    public CommentService(ILogger<CommentService> logger, Commenter.CommenterClient client)
     {
         _logger = logger;
+        _client = client;
     }
 
     public async Task<Comment?> AddAsync(Comment newComment)
     {
-        Comments.Add(newComment);
+        var request = new CreateRequest()
+        {
+            Photoid = newComment.PhotoId,
+            Title = newComment.Title,
+            Content = newComment.Content,
+        };
 
-        await Task.CompletedTask;
+        var response = await _client.CreateAsync(request);
 
-        return newComment;
+        return new()
+        {
+            Id = response.Id,
+            PhotoId = response.Photoid,
+            Title = response.Title,
+            Content = response.Content,
+            SubmittedOn = response.Submittedon.ToDateTime()
+        };
     }
 
     public async Task<Comment?> DeleteAsync(int commentId)
     {
-        var item = Comments.FirstOrDefault(c => c.Id == commentId);
-
-        if (item != null)
-            Comments.Remove(item);
-
-        await Task.CompletedTask;
-
-        return item;
+        var request = new DeleteRequest() { Commentid = commentId };
+        var response = await _client.DeleteAsync(request);
+        return new()
+        {
+            Id = response.Id,
+            PhotoId = response.Photoid,
+            Title = response.Title,
+            Content = response.Content,
+            SubmittedOn = response.Submittedon.ToDateTime()
+        };
     }
 
     public async Task<IList<Comment>?> GetByPhotoIdAsync(int photoId)
     {
-        await Task.CompletedTask;
+        var request = new GetByPhotoIdRequest() { Photoid = photoId };
+        var response = await _client.GetByPhotoIdAsync(request);
 
-        return Comments.Where(c => c.PhotoId == photoId)
-                       .ToList();
+        return response.Comments.Select(c => new Comment() {
+            Id = c.Id,
+            PhotoId = c.Photoid,
+            Title = c.Title,
+            Content = c.Content,
+            SubmittedOn = c.Submittedon.ToDateTime()
+        }).ToList();
     }
 
     public async Task<Comment?> UpdateAsync(Comment changedComment)
     {
-        var item = Comments.FirstOrDefault(c => c.Id == changedComment.Id);
-
-        if (item != null)
+        var request = new UpdateRequest()
         {
-            Comments.Remove(item);
-            Comments.Add(changedComment);
-        }
+            Id = changedComment.Id,
+            Title = changedComment.Title,
+            Content = changedComment.Content,
+            Photoid = changedComment.PhotoId
+        };
+        var response = await _client.UpdateAsync(request);
 
-        await Task.CompletedTask;
 
-        return changedComment;
+        return new()
+        {
+            Id = response.Id,
+            PhotoId = response.Photoid,
+            Title = response.Title,
+            Content = response.Content,
+            SubmittedOn = response.Submittedon.ToDateTime()
+        };
     }
 }
