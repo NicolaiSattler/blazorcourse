@@ -1,16 +1,12 @@
 
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
-using MyBlazorCourse.Shared.Interface;
 using MyBlazorCourse.Shared.Model;
 
 namespace BlazorComponents.Components.Edit;
 
-public partial class EditPhotoComponent: ComponentBase
+public partial class EditPhotoComponent
 {
-    [Inject]
-    private IPhotoService? PhotoService { get; set;}
-
     [Parameter]
     public Photo Photo { get; set; } = new();
 

@@ -9,7 +9,7 @@ public interface IPhotoRepository
     Task<Photo> AddAsync(Photo newPhoto);
     Task<IEnumerable<Photo>> GetAsync();
     Task<Photo?> GetByIdAsync(int id);
-    Task<Photo?> RemoveAsync(int id);
+    Task<int> RemoveAsync(int id);
     Task<Photo?> UpdateAsync(Photo changedPhoto);
 }
 
@@ -24,11 +24,11 @@ public class PhotoRepository : IPhotoRepository
 
     public async Task<Photo> AddAsync(Photo newPhoto)
     {
-        var result = _context.Photos.Add(newPhoto);
+       _context.Photos.Add(newPhoto);
 
         await _context.SaveChangesAsync();
 
-        return result.Entity;
+        return newPhoto;
     }
     public async Task<IEnumerable<Photo>> GetAsync() => await _context.Photos.ToListAsync();
 
@@ -36,14 +36,14 @@ public class PhotoRepository : IPhotoRepository
 
     public async Task<Photo?> UpdateAsync(Photo changedPhoto)
     {
-        var result = _context.Photos.Update(changedPhoto);
+        _context.Photos.Update(changedPhoto);
 
         await _context.SaveChangesAsync();
 
-        return result.Entity;
+        return changedPhoto;
     }
 
-    public async Task<Photo?> RemoveAsync(int id)
+    public async Task<int> RemoveAsync(int id)
     {
         var item = await _context.Photos.FirstOrDefaultAsync(p => p.Id == id);
 
@@ -53,7 +53,7 @@ public class PhotoRepository : IPhotoRepository
 
             await _context.SaveChangesAsync();
 
-            return result.Entity;
+            return id;
         }
 
         return default;

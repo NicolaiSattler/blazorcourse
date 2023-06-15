@@ -6,5 +6,6 @@ public class Comment
     public int PhotoId { get; set; }
     public string? Title { get; set; }
     public string? Content { get; set; }
+    public string? UserName { get; set; }
     public DateTime SubmittedOn { get; set; }
 }

@@ -1,4 +1,13 @@
-﻿<MudNavMenu>
+﻿@using Microsoft.AspNetCore.Components.Authorization
+<MudNavMenu>
     <MudNavLink Href="/" Icon="@Icons.Material.Filled.Home">Home</MudNavLink>
-    <MudNavLink Href="/all-photos" Icon="@Icons.Material.Filled.Photo">Album</MudNavLink>
+    <AuthorizeView>
+        <Authorized>
+            <MudText>@context.User.Identity.Name</MudText>
+            <MudNavLink Href="/all-photos" Icon="@Icons.Material.Filled.Photo">Album</MudNavLink>
+        </Authorized>
+        <NotAuthorized>
+            <MudNavLink Href="bff/login">Login</MudNavLink>
+        </NotAuthorized>
+    </AuthorizeView>
 </MudNavMenu>

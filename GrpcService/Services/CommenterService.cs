@@ -1,6 +1,7 @@
 using Google.Protobuf.WellKnownTypes;
 using Grpc.Core;
 using Infrastructure.Repository;
+using Microsoft.AspNetCore.Authorization;
 using MyBlazorCourse.Shared.Model;
 
 namespace GrpcService.Services;
@@ -14,6 +15,7 @@ public class CommenterService: Commenter.CommenterBase
         _commentRepository = commentRepository;
     }
 
+    [Authorize]
     public override async Task<CreateResponse> Create(CreateRequest request, ServerCallContext context)
     {
         var newComment = new Comment
@@ -38,7 +40,8 @@ public class CommenterService: Commenter.CommenterBase
 
         return response;
     }
-
+    
+    [Authorize]
     public override async Task<UpdateResponse> Update(UpdateRequest request, ServerCallContext context)
     {
         var comment = new Comment
@@ -63,6 +66,7 @@ public class CommenterService: Commenter.CommenterBase
         : new UpdateResponse();
     }
 
+    [Authorize]
     public async override Task<DeleteResponse> Delete(DeleteRequest request, ServerCallContext context)
     {
         var deletedComment = await _commentRepository.RemoveAsync(request.Commentid);

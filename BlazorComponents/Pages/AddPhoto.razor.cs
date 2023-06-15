@@ -19,14 +19,12 @@ public partial class AddPhoto: ComponentBase
     {
         try
         {
+            if (PhotoService != null)
+            {
+                await PhotoService.AddAsync(newPhoto);
+            }
 
-        if (PhotoService != null)
-        {
-            await PhotoService.AddAsync(newPhoto);
-        }
-
-        NavigationManager?.NavigateTo("/all-photos");
-
+            NavigationManager?.NavigateTo("/all-photos");
         }
         catch(Exception ex)
         {

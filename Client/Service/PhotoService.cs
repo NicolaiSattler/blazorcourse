@@ -37,9 +37,7 @@ public class PhotoService : IPhotoService
     {
         try
         {
-            var response = await _client.PostAsJsonAsync<Photo>("/api/photo", newPhoto);
-
-            Console.WriteLine(response.Content);
+            var response = await _client.PostAsJsonAsync("/api/photo", newPhoto);
 
             response.EnsureSuccessStatusCode();
             return await response.Content.ReadFromJsonAsync<Photo?>();
@@ -54,7 +52,7 @@ public class PhotoService : IPhotoService
 
     public async Task<Photo?> UpdateAsync(Photo changedPhoto)
     {
-        var response = await _client.PutAsJsonAsync<Photo>($"/api/photo/{changedPhoto.Id}", changedPhoto);
+        var response = await _client.PutAsJsonAsync($"/api/photo/{changedPhoto.Id}", changedPhoto);
 
         response.EnsureSuccessStatusCode();
 

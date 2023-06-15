@@ -61,16 +61,25 @@ public class CommentService : ICommentService
 
     public async Task<IList<Comment>?> GetByPhotoIdAsync(int photoId)
     {
-        var request = new GetByPhotoIdRequest() { Photoid = photoId };
-        var response = await _client.GetByPhotoIdAsync(request);
+        try
+        {
+            var request = new GetByPhotoIdRequest() { Photoid = photoId };
+            var response = await _client.GetByPhotoIdAsync(request);
 
-        return response.Comments.Select(c => new Comment() {
-            Id = c.Id,
-            PhotoId = c.Photoid,
-            Title = c.Title,
-            Content = c.Content,
-            SubmittedOn = c.Submittedon.ToDateTime()
-        }).ToList();
+            return response.Comments.Select(c => new Comment()
+            {
+                Id = c.Id,
+                PhotoId = c.Photoid,
+                Title = c.Title,
+                Content = c.Content,
+                SubmittedOn = c.Submittedon.ToDateTime()
+            }).ToList();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex);
+            return null;
+        }
     }
 
     public async Task<Comment?> UpdateAsync(Comment changedComment)

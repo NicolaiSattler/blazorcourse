@@ -1,31 +1,36 @@
 
 using Infrastructure.Repository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MyBlazorCourse.Shared.Model;
 
 namespace RestApi.Controllers;
+
+//TODO: authorization uitwerken.
 
 [ApiController]
 [Route("api/[controller]")]
 public class PhotoController : ControllerBase
 {
     private readonly IPhotoRepository _repository;
+    private readonly IAuthorizationService _authService;
     private readonly ILogger<PhotoController> _logger;
 
-    public PhotoController(IPhotoRepository repository, ILogger<PhotoController> logger)
+    public PhotoController(IPhotoRepository repository, IAuthorizationService authService, ILogger<PhotoController> logger)
     {
         _repository = repository;
+        _authService = authService;
         _logger = logger;
     }
 
-    [HttpPost]
+    [HttpPost, Authorize]
     public async Task<ActionResult<Photo>> CreateAsync(Photo newPhoto)
     {
         if (newPhoto == null) return BadRequest();
 
-        var result = await _repository.AddAsync(newPhoto);
+        newPhoto.UserName = User.Identity?.Name ?? "Unknown";
 
-        return Ok(result);
+        return await _repository.AddAsync(newPhoto);
     }
 
     [HttpGet()]
@@ -46,22 +51,18 @@ public class PhotoController : ControllerBase
         return Ok(result);
     }
 
-    [HttpPut("{id}")]
+    [HttpPut("{id}"), Authorize]
     public async Task<ActionResult<Photo>> UpdateAsync(Photo changedPhoto)
     {
         var result = await _repository.UpdateAsync(changedPhoto);
 
-        if (result == null) return NotFound(changedPhoto.Id);
-
         return Ok(result);
     }
 
-    [HttpDelete("{id}")]
-    public async Task<ActionResult<Photo>> DeleteAsync(int id)
+    [HttpDelete("{id}"), Authorize]
+    public async Task<ActionResult<int>> DeleteAsync(int id)
     {
         var result = await _repository.RemoveAsync(id);
-
-        if (result == null) return NotFound(id);
 
         return Ok(result);
     }
