@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 
-namespace RestApi.Authorization;
+namespace MyBlazorCourse.Shared.Authorization;
 
 public class UpdatePhotoAuthorizationRequirement: IAuthorizationRequirement { }

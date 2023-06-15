@@ -1,7 +1,6 @@
 using Infrastructure;
 using Microsoft.IdentityModel.Tokens;
-using MyBlazorCourse.Shared.Interface;
-using RestApi.Authorization;
+using MyBlazorCourse.Shared.Authorization;
 using RestApi.Service;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -24,7 +23,7 @@ builder.Services.AddAuthentication("Bearer")
 builder.Services.AddScoped<RestApi.Service.IPhotoService, PhotoService>();
 builder.Services.AddSingleton<UpdatePhotoAuthorizationHandler>();
 
-builder.Services.AddAuthorization(options => 
+builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy("UpdatePhoto", policy => policy.Requirements.Add(new UpdatePhotoAuthorizationRequirement()));
 });
