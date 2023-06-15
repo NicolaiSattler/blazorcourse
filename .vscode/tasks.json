@@ -49,6 +49,22 @@
             "problemMatcher": "$msCompile"
         },
         {
+            "label": "watch identity",
+            "command": "dotnet",
+            "type": "shell",
+            "args": [
+                "watch",
+                "run",
+                "-lp='https'",
+                "--project",
+                "${workspaceFolder}/IdentityProvider/IdentityProvider.csproj"
+            ],
+            "presentation": {
+                "reveal": "silent"
+            },
+            "problemMatcher": "$msCompile"
+        },
+        {
             "label": "watch gRpc api",
             "command": "dotnet",
             "type": "shell",
