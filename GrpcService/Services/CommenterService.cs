@@ -46,7 +46,7 @@ public class CommenterService: Commenter.CommenterBase
         }
         return new CreateResponse();
     }
-    
+
     [Authorize]
     public override async Task<UpdateResponse> Update(UpdateRequest request, ServerCallContext context)
     {

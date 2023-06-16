@@ -1,17 +1,19 @@
+using System.Runtime.InteropServices;
 using GrpcService.Services;
 using Infrastructure;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
+var isOSX = RuntimeInformation.IsOSPlatform(OSPlatform.OSX);
 
-if (builder.Environment.IsDevelopment())
+if (builder.Environment.IsDevelopment() && isOSX)
 {
     builder.WebHost.ConfigureKestrel(options =>
     {
         options.Limits.MinRequestBodyDataRate = null;
-        options.ListenAnyIP(5105, o => o.Protocols = HttpProtocols.Http1);
-        options.ListenAnyIP(7269, o => o.Protocols = HttpProtocols.Http2);
+        options.ListenLocalhost(5105, o => o.Protocols = HttpProtocols.Http1);
+        options.ListenLocalhost(7269, o => o.Protocols = HttpProtocols.Http2);
     });
 }
 builder.Services.AddGrpc();

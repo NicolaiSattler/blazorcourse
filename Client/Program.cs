@@ -1,3 +1,4 @@
+using BlazorComponents.JSInterop;
 using Grpc.Net.Client.Web;
 using GrpcService;
 using Microsoft.AspNetCore.Components.Authorization;
@@ -17,6 +18,10 @@ builder.Services.AddAuthorizationCore();
 builder.Services.AddScoped<AuthenticationStateProvider, BffAuthenticationStateProvider>();
 
 builder.Services.AddMudServices();
+
+builder.Services.AddScoped<InteropTest>();
+builder.Services.AddScoped<LeafletInterop>();
+builder.Services.AddScoped<ExifInterop>();
 
 builder.Services.AddScoped<IPhotoService, PhotoService>();
 builder.Services.AddScoped<ICommentService, CommentService>();

@@ -1,4 +1,5 @@
 
+using BlazorComponents.JSInterop;
 using FluentValidation;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
@@ -10,14 +11,25 @@ namespace BlazorComponents.Components.Edit;
 
 public partial class EditPhotoComponent
 {
-    [Parameter]
-    public Photo Photo { get; set; } = new();
-
     private PhotoValidation photoValidation = new();
     private MudForm? form;
 
     [Parameter]
+    public Photo Photo { get; set; } = new();
+
+    [Parameter]
     public EventCallback<Photo> PhotoChanged { get; set; }
+
+    [Inject]
+    private LeafletInterop? LeafletInterop { get; set;}
+
+    [Inject]
+    private ExifInterop? ExifInterop { get; set; }
+
+    private void RetrieveLatLong(double latitude, double longitude)
+    {
+        Console.WriteLine($"lat: {latitude} long: {longitude}");
+    }
 
     public async Task HandleInputFileChanged(IBrowserFile file)
     {
@@ -36,8 +48,10 @@ public partial class EditPhotoComponent
 
             if (form.IsValid)
             {
+                await ExifInterop.InvokeExtractLatLong(RetrieveLatLong);
                 await PhotoChanged.InvokeAsync(Photo);
             }
         }
     }
+
 }

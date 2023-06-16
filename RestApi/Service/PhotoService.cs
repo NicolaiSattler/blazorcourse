@@ -15,9 +15,9 @@ public class PhotoService : IPhotoService
     private readonly IValidator<Photo> _validator;
     private readonly IPhotoRepository _repository;
 
-    public PhotoService(ILogger<PhotoService> logger, 
-                        IAuthorizationService authorizationService, 
-                        IValidator<Photo> validator, 
+    public PhotoService(ILogger<PhotoService> logger,
+                        IAuthorizationService authorizationService,
+                        IValidator<Photo> validator,
                         IPhotoRepository repository)
     {
         _logger = logger;
@@ -32,7 +32,7 @@ public class PhotoService : IPhotoService
 
         var result = _validator.Validate(newPhoto);
 
-        if (result!.IsValid)
+        if (!result.IsValid)
         {
             return new BadRequestObjectResult(result.Errors);
         }

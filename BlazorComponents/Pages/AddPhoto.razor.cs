@@ -1,6 +1,5 @@
+using BlazorComponents.JSInterop;
 using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Forms;
-using Microsoft.Extensions.Logging;
 using MyBlazorCourse.Shared.Interface;
 using MyBlazorCourse.Shared.Model;
 
@@ -13,7 +12,16 @@ public partial class AddPhoto: ComponentBase
     private NavigationManager? NavigationManager { get; set; }
 
     [Inject]
-    private IPhotoService? PhotoService { get; set;}
+    private IPhotoService? PhotoService { get; set; }
+
+    [Inject]
+    private InteropTest? Interop { get; set; }
+
+    private async Task SayHiWithInterop()
+    {
+        if (Interop != null)
+            await Interop.SayHi();
+    }
 
     private async Task HandlePhotoChanged(Photo newPhoto)
     {
