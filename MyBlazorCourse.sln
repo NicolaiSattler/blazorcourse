@@ -19,6 +19,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "Infrastru
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityProvider", "IdentityProvider\IdentityProvider.csproj", "{814C9EB7-BE79-48D8-BBD0-434548358EE1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorComponents.Tests", "BlazorComponents.Tests\BlazorComponents.Tests.csproj", "{95F7EE63-2843-4C0E-8CA6-45EEE6D275BF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -125,6 +127,18 @@ Global
 		{814C9EB7-BE79-48D8-BBD0-434548358EE1}.Release|x64.Build.0 = Release|Any CPU
 		{814C9EB7-BE79-48D8-BBD0-434548358EE1}.Release|x86.ActiveCfg = Release|Any CPU
 		{814C9EB7-BE79-48D8-BBD0-434548358EE1}.Release|x86.Build.0 = Release|Any CPU
+		{95F7EE63-2843-4C0E-8CA6-45EEE6D275BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{95F7EE63-2843-4C0E-8CA6-45EEE6D275BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{95F7EE63-2843-4C0E-8CA6-45EEE6D275BF}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{95F7EE63-2843-4C0E-8CA6-45EEE6D275BF}.Debug|x64.Build.0 = Debug|Any CPU
+		{95F7EE63-2843-4C0E-8CA6-45EEE6D275BF}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{95F7EE63-2843-4C0E-8CA6-45EEE6D275BF}.Debug|x86.Build.0 = Debug|Any CPU
+		{95F7EE63-2843-4C0E-8CA6-45EEE6D275BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{95F7EE63-2843-4C0E-8CA6-45EEE6D275BF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{95F7EE63-2843-4C0E-8CA6-45EEE6D275BF}.Release|x64.ActiveCfg = Release|Any CPU
+		{95F7EE63-2843-4C0E-8CA6-45EEE6D275BF}.Release|x64.Build.0 = Release|Any CPU
+		{95F7EE63-2843-4C0E-8CA6-45EEE6D275BF}.Release|x86.ActiveCfg = Release|Any CPU
+		{95F7EE63-2843-4C0E-8CA6-45EEE6D275BF}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
