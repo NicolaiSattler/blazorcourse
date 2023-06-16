@@ -6,9 +6,6 @@ namespace BlazorComponents.Components.CommentStates.Edit;
 
 public partial class EditCommentComponent: ComponentBase
 {
-    [Inject]
-    private ICommentService? CommentService { get; set; }
-
     [Parameter, EditorRequired]
     public Comment Comment { get; set; } = new();
 

@@ -18,23 +18,31 @@ public class CommentService : ICommentService
 
     public async Task<Comment?> AddAsync(Comment newComment)
     {
-        var request = new CreateRequest()
+        try
         {
-            Photoid = newComment.PhotoId,
-            Title = newComment.Title,
-            Content = newComment.Content,
-        };
+            var request = new CreateRequest()
+            {
+                Photoid = newComment.PhotoId,
+                Title = newComment.Title,
+                Content = newComment.Content,
+            };
 
-        var response = await _client.CreateAsync(request);
+            var response = await _client.CreateAsync(request);
 
-        return new()
+            return new()
+            {
+                Id = response.Id,
+                PhotoId = response.Photoid,
+                Title = response.Title,
+                Content = response.Content,
+                SubmittedOn = response.Submittedon.ToDateTime()
+            };
+        }
+        catch (Exception ex)
         {
-            Id = response.Id,
-            PhotoId = response.Photoid,
-            Title = response.Title,
-            Content = response.Content,
-            SubmittedOn = response.Submittedon.ToDateTime()
-        };
+            Console.Write(ex);
+        }
+        return null;
     }
 
     public async Task<Comment?> DeleteAsync(int commentId)

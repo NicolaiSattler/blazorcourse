@@ -18,27 +18,33 @@ public class CommenterService: Commenter.CommenterBase
     [Authorize]
     public override async Task<CreateResponse> Create(CreateRequest request, ServerCallContext context)
     {
-        var newComment = new Comment
+        try
         {
-            PhotoId = request.Photoid,
-            Title = request.Title,
-            Content = request.Content,
-            SubmittedOn = DateTime.UtcNow
-        };
+            var newComment = new Comment
+            {
+                PhotoId = request.Photoid,
+                Title = request.Title,
+                Content = request.Content,
+                SubmittedOn = DateTime.UtcNow
+            };
 
-        newComment = await _commentRepository.AddAsync(newComment);
+            newComment = await _commentRepository.AddAsync(newComment);
 
-        var response = newComment is not null ? new CreateResponse()
-        {
-            Id = newComment.Id,
-            Photoid = newComment.PhotoId,
-            Title = newComment.Title,
-            Content = newComment.Content,
-            Submittedon = Timestamp.FromDateTime(newComment.SubmittedOn.ToUniversalTime())
+            var response = newComment is not null ? new CreateResponse()
+            {
+                Id = newComment.Id,
+                Photoid = newComment.PhotoId,
+                Title = newComment.Title,
+                Content = newComment.Content,
+                Submittedon = Timestamp.FromDateTime(newComment.SubmittedOn.ToUniversalTime())
+            }
+            : new CreateResponse();
         }
-        : new CreateResponse();
-
-        return response;
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex);
+        }
+        return new CreateResponse();
     }
     
     [Authorize]
