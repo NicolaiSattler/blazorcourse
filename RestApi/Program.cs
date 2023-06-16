@@ -1,7 +1,12 @@
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Infrastructure;
 using Microsoft.IdentityModel.Tokens;
 using MyBlazorCourse.Shared.Authorization;
+using MyBlazorCourse.Shared.Model;
+using MyBlazorCourse.Shared.Validation;
 using RestApi.Service;
+using System;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,8 +25,11 @@ builder.Services.AddAuthentication("Bearer")
         };
     });
 
-builder.Services.AddScoped<RestApi.Service.IPhotoService, PhotoService>();
+builder.Services.AddScoped<IPhotoService, PhotoService>();
 builder.Services.AddSingleton<UpdatePhotoAuthorizationHandler>();
+
+builder.Services.AddFluentValidation();
+builder.Services.AddScoped<IValidator<Photo>, PhotoValidation>();
 
 builder.Services.AddAuthorization(options =>
 {

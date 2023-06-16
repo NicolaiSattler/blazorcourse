@@ -2,6 +2,7 @@
 using Infrastructure.Repository;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using MyBlazorCourse.Shared.Interface;
 using MyBlazorCourse.Shared.Model;
 
 namespace RestApi.Controllers;
@@ -13,24 +14,22 @@ namespace RestApi.Controllers;
 public class PhotoController : ControllerBase
 {
     private readonly IPhotoRepository _repository;
-    private readonly IAuthorizationService _authService;
+    private readonly Service.IPhotoService _photoService;
     private readonly ILogger<PhotoController> _logger;
 
-    public PhotoController(IPhotoRepository repository, IAuthorizationService authService, ILogger<PhotoController> logger)
+    public PhotoController(IPhotoRepository repository,
+                           Service.IPhotoService photoService,
+                           ILogger<PhotoController> logger)
     {
         _repository = repository;
-        _authService = authService;
+        _photoService = photoService;
         _logger = logger;
     }
 
     [HttpPost, Authorize]
     public async Task<ActionResult<Photo>> CreateAsync(Photo newPhoto)
     {
-        if (newPhoto == null) return BadRequest();
-
-        newPhoto.UserName = User.Identity?.Name ?? "Unknown";
-
-        return await _repository.AddAsync(newPhoto);
+        return await _photoService.CreateAsync(newPhoto, User);
     }
 
     [HttpGet()]

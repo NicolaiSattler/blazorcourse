@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Protos\comment.proto" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Google.Protobuf" Version="3.23.3" />
     <PackageReference Include="Grpc.Net.Client" Version="2.53.0" />
     <PackageReference Include="Grpc.Net.Client.Web" Version="2.53.0" />
@@ -27,9 +31,8 @@
     <ProjectReference Include="..\BlazorComponents\BlazorComponents.csproj" />
   </ItemGroup>
 
-
   <ItemGroup>
-    <Protobuf Include="Proto\comment.proto" GrpcServices="Client" />
+    <Protobuf Include="Protos\comment.proto" GrpcServices="Client" />
   </ItemGroup>
 
 </Project>

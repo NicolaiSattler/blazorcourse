@@ -1,9 +1,9 @@
 <MudCard>
     @if (Photo != null)
     {
-        <MudForm Model="@Photo">
+        <MudForm Model="@Photo" @ref="@form" Validation="@(photoValidation.ValidateValue)" ValidationDelay="0">
             <MudCardContent>
-                <MudTextField Label="Title" HelperText="A nice title for the picture" @bind-Value="Photo.Title"
+                <MudTextField Label="Title"  HelperText="A nice title for the picture" @bind-Value="Photo.Title"
                     For="@(() => Photo.Title)" />
 
                 <MudTextField Label="Description" HelperText="What's the story behind this picture?"

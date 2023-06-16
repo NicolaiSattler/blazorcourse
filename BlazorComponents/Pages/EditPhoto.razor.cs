@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Authorization;
 using MyBlazorCourse.Shared.Interface;
 using MyBlazorCourse.Shared.Model;
 
@@ -14,6 +15,9 @@ public partial class EditPhoto: ComponentBase
 
     [Parameter]
     public Photo? Photo { get; set; }
+
+    [CascadingParameter] //TODO: enforce auth policy
+    public Task<AuthenticationState>? AuthenticationState { get; set; }
 
     [Parameter]
     public int Id { get; set; }
