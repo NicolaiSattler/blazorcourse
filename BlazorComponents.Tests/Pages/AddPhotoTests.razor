@@ -1,0 +1,25 @@
+@attribute [TestClass]
+@inherits AddPhotoContext
+
+These tests are written entirely in razor and C# syntax.
+
+Learn more at https://bunit.dev/docs/getting-started/writing-tests.html#creating-basic-tests-in-razor-files
+
+@code
+{
+    [TestMethod]
+	public void PhotoChanged_SavesNewPhoto()
+	{
+        //Arrange
+        var cut = Render(@<AddPhoto />);
+        var instanceEditPhoto = cut.FindComponent<EditPhotoComponent>().Instance;
+        var photo = new Photo() { Id = 1 };
+
+        MockedPhotoService.Setup(m => m.AddAsync(photo))
+                          .ReturnsAsync(photo)
+                          .Verifiable();
+
+        //Act & Act
+        cut.InvokeAsync(async() => { await instanceEditPhoto.PhotoChanged.InvokeAsync(photo); });
+    }
+}

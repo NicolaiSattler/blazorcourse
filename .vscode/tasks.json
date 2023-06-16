@@ -71,7 +71,7 @@
             "args": [
                 "watch",
                 "run",
-                "-lp='http'",
+                "-lp='https'",
                 "--project",
                 "${workspaceFolder}/GrpcService/GrpcService.csproj"
             ],

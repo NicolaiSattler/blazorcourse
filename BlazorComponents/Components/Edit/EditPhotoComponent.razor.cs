@@ -28,12 +28,10 @@ public partial class EditPhotoComponent
         Photo.ImageMimetype = file.ContentType;
     }
 
-
-
     public async Task HandleSubmit()
     {
         if (form != null)
-        { 
+        {
             await form.Validate();
 
             if (form.IsValid)
