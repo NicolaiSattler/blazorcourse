@@ -1,3 +1,4 @@
+using System.Runtime.InteropServices;
 using BlazorComponents.JSInterop;
 using Grpc.Net.Client.Web;
 using GrpcService;
@@ -24,7 +25,9 @@ builder.Services.AddScoped<LeafletInterop>();
 builder.Services.AddScoped<ExifInterop>();
 
 builder.Services.AddScoped<IPhotoService, PhotoService>();
-builder.Services.AddScoped<ICommentService, CommentService>();
+builder.Services.AddScoped<ICommentService, StubCommentService>();
+//builder.Services.AddScoped<ICommentService, CommentService>();
+
 builder.Services.AddTransient<AntiforgeryHandler>();
 builder.Services.AddTransient(sp => sp.GetRequiredService<IHttpClientFactory>()
                 .CreateClient("backend"));

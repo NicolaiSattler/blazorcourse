@@ -1,7 +1,7 @@
 <MudCardContent>
     @if (Comment is not null)
     {
-        <MudText><i>@Comment.SubmittedOn.ToString()</i></MudText>
+        <MudText><i>By: @Comment.UserName  At: @Comment.SubmittedOn.ToString("dd-MM-yy hh:MM")</i></MudText>
         <MudText><b>Title: </b> @Comment?.Title</MudText>
         <MudText><b>Description: </b> @Comment?.Content</MudText>
     }
