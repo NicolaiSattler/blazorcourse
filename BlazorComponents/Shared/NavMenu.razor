@@ -3,7 +3,6 @@
     <MudNavLink Href="/" Icon="@Icons.Material.Filled.Home">Home</MudNavLink>
     <AuthorizeView>
         <Authorized>
-            <MudText>@context.User.Identity.Name</MudText>
             <MudNavLink Href="/all-photos" Icon="@Icons.Material.Filled.Photo">Album</MudNavLink>
         </Authorized>
         <NotAuthorized>

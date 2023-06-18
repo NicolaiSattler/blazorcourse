@@ -23,6 +23,8 @@ public partial class CommentsComponent: ComponentBase
 
     private async Task HandleOnDeleteAsync(Comment deletedComment)
     {
+        if (deletedComment == null) return;
+
         if (CommentService != null)
             await CommentService.DeleteAsync(deletedComment.Id);
 
@@ -31,6 +33,10 @@ public partial class CommentsComponent: ComponentBase
 
     private async Task HandleOnNewAsync(Comment newComment)
     {
+        if (newComment == null) return;
+
+        newComment.PhotoId = PhotoId;
+
         if (CommentService != null)
             await CommentService.AddAsync(newComment);
 
@@ -39,9 +45,10 @@ public partial class CommentsComponent: ComponentBase
 
     private async Task HandleOnEditAsync(Comment changedComment)
     {
+        if (changedComment == null) return;
+
         if (CommentService != null)
             await CommentService.UpdateAsync(changedComment);
-
 
         var oldComment = CommentCollection.First(c => c.Id == changedComment.Id);
         var index = CommentCollection.IndexOf(oldComment);

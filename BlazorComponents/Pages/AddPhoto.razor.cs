@@ -14,15 +14,6 @@ public partial class AddPhoto: ComponentBase
     [Inject]
     private IPhotoService? PhotoService { get; set; }
 
-    [Inject]
-    private InteropTest? Interop { get; set; }
-
-    private async Task SayHiWithInterop()
-    {
-        if (Interop != null)
-            await Interop.SayHi();
-    }
-
     private async Task HandlePhotoChanged(Photo newPhoto)
     {
         try
