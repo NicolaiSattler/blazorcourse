@@ -14,6 +14,9 @@
         <AuthorizeView>
             <Authorized>
                 <MudText>@(@context.User?.Identity?.Name ?? "Unknown")</MudText>
+                <MudIconButton Icon="@Icons.Material.Filled.Logout"
+                               Color="Color.Inherit"
+                               Href="@context.User.FindFirst("bff:logout_url")?.Value" />
             </Authorized>
         </AuthorizeView>
     </MudAppBar>
